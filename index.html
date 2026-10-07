@@ -7,24 +7,28 @@
 <title>Reunión con Mercado Libre Negocios</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Proxima Nova','Segoe UI',system-ui,Arial,sans-serif;background:#000;color:#F2F2F2;line-height:1.5}
+  /* Tema por defecto = A (carbon suave). Vista previa de otros: agregar &t=a, &t=b o &t=c a la direccion */
+  body{--bg:#24262B;--card:#2F3238;--border:#3D414A;--text:#F5F5F5;--muted:#C9CDD3;--optbg:#383C44;--optborder:#4C515B;--hoverbg:#3A4A66}
+  body.t-b{--bg:#0E1A2E;--card:#14233D;--border:#243756;--text:#F4F7FB;--muted:#B8C4D8;--optbg:#1B2E4D;--optborder:#2F4770;--hoverbg:#22406E}
+  body.t-c{--bg:#1A1A1A;--card:#262626;--border:#3A3A3A;--text:#FFFFFF;--muted:#CFCFCF;--optbg:#303030;--optborder:#6B6226;--hoverbg:#3A3722}
+  body{font-family:'Proxima Nova','Segoe UI',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
   .header{background:#FFE600;padding:18px 24px;border-bottom:2px solid #e6c900}
   .header img{height:44px;display:block}
   .wrap{max-width:640px;margin:24px auto;padding:0 16px}
-  .card{background:#111;border:1px solid #2B2B2B;border-radius:10px;padding:28px 26px;box-shadow:0 1px 6px rgba(0,0,0,.6)}
-  h1{font-size:22px;margin-bottom:6px;color:#fff}
-  .lead{font-size:15px;color:#BDBDBD;margin:10px 0 22px}
-  h2{font-size:16px;margin-bottom:12px;color:#fff}
-  .opt{display:block;width:100%;text-align:left;font:inherit;font-size:15px;padding:14px 16px;margin-bottom:10px;border-radius:8px;
-       border:1.5px solid #444;background:#1C1C1C;color:#F2F2F2;cursor:pointer}
-  .opt:hover{border-color:#3483FA;background:#17233A}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px 26px;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+  h1{font-size:22px;margin-bottom:6px;color:var(--text)}
+  .lead{font-size:15px;color:var(--muted);margin:10px 0 22px}
+  h2{font-size:16px;margin-bottom:12px;color:var(--text)}
+  .opt{display:block;width:100%;text-align:left;font:inherit;font-size:15px;padding:14px 16px;margin-bottom:10px;border-radius:10px;
+       border:1.5px solid var(--optborder);background:var(--optbg);color:var(--text);cursor:pointer}
+  .opt:hover{border-color:#3483FA;background:var(--hoverbg)}
   .opt.primary{border-color:#3483FA;background:#3483FA;color:#fff;font-weight:600}
   .opt.primary:hover{background:#2968c8;border-color:#2968c8}
   .opt:disabled{opacity:.55;cursor:default}
   .gracias{display:none;text-align:center;padding:10px 0}
-  .gracias h2{font-size:20px;margin-bottom:8px;color:#fff}
-  .gracias p{font-size:15px;color:#BDBDBD}
-  footer{text-align:center;font-size:11px;color:#777;padding:18px}
+  .gracias h2{font-size:20px;margin-bottom:8px;color:var(--text)}
+  .gracias p{font-size:15px;color:var(--muted)}
+  footer{text-align:center;font-size:11px;color:var(--muted);opacity:.7;padding:18px}
 </style>
 </head>
 <body>
@@ -55,6 +59,8 @@
   var ENTRY_REF = 'entry.301989891';
   var ENTRY_INTERES = 'entry.301989893';
   var AGENDA = 'https://calendar.app.google/vqHCkgvEREZkXmh69';
+  var tema = new URLSearchParams(location.search).get('t');
+  if (tema === 'b' || tema === 'c') { document.body.classList.add('t-' + tema); }
   var ref = (new URLSearchParams(location.search).get('c') || 'directo').replace(/[^A-Za-z0-9_\-]/g, '').slice(0, 40) || 'directo';
 
   function registrar(valor) {
