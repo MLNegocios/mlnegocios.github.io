@@ -7,10 +7,8 @@
 <title>Reunión con Mercado Libre Negocios</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  /* Tema por defecto = A (carbon suave). Vista previa de otros: agregar &t=a, &t=b o &t=c a la direccion */
-  body{--bg:#24262B;--card:#2F3238;--border:#3D414A;--text:#F5F5F5;--muted:#C9CDD3;--optbg:#383C44;--optborder:#4C515B;--hoverbg:#3A4A66}
-  body.t-b{--bg:#0E1A2E;--card:#14233D;--border:#243756;--text:#F4F7FB;--muted:#B8C4D8;--optbg:#1B2E4D;--optborder:#2F4770;--hoverbg:#22406E}
-  body.t-c{--bg:#1A1A1A;--card:#262626;--border:#3A3A3A;--text:#FFFFFF;--muted:#CFCFCF;--optbg:#303030;--optborder:#6B6226;--hoverbg:#3A3722}
+  /* Tema azul marino (elegido por Jordan, 6-oct-2026) */
+  body{--bg:#0E1A2E;--card:#14233D;--border:#243756;--text:#F4F7FB;--muted:#B8C4D8;--optbg:#1B2E4D;--optborder:#2F4770;--hoverbg:#22406E}
   body{font-family:'Proxima Nova','Segoe UI',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
   .header{background:#FFE600;padding:18px 24px;border-bottom:2px solid #e6c900}
   .header img{height:44px;display:block}
@@ -59,8 +57,6 @@
   var ENTRY_REF = 'entry.301989891';
   var ENTRY_INTERES = 'entry.301989893';
   var AGENDA = 'https://calendar.app.google/vqHCkgvEREZkXmh69';
-  var tema = new URLSearchParams(location.search).get('t');
-  if (tema === 'b' || tema === 'c') { document.body.classList.add('t-' + tema); }
   var ref = (new URLSearchParams(location.search).get('c') || 'directo').replace(/[^A-Za-z0-9_\-]/g, '').slice(0, 40) || 'directo';
 
   function registrar(valor) {
