@@ -57,7 +57,9 @@
   var ENTRY_REF = 'entry.301989891';
   var ENTRY_INTERES = 'entry.301989893';
   var AGENDA = 'https://calendar.app.google/vqHCkgvEREZkXmh69';
-  var ref = (new URLSearchParams(location.search).get('c') || 'directo').replace(/[^A-Za-z0-9_\-]/g, '').slice(0, 40) || 'directo';
+  var ref = (new URLSearchParams(location.search).get('c') || sessionStorage.getItem('nbe_ref') || 'directo').replace(/[^A-Za-z0-9_\-]/g, '').slice(0, 40) || 'directo';
+  // se guarda el CID y se limpia la barra de direcciones (queda solo el dominio); si recarga, se conserva por la sesion
+  try { sessionStorage.setItem('nbe_ref', ref); history.replaceState(null, '', location.pathname); } catch (e) {}
 
   function registrar(valor) {
     var datos = new URLSearchParams();
