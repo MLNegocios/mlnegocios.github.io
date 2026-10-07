@@ -66,6 +66,15 @@
     return fetch(ACCION, { method: 'POST', mode: 'no-cors', body: datos, keepalive: true }).catch(function () {});
   }
 
+  // Registro de apertura (una vez por visita): permite medir cuantos abren contra cuantos eligen una opcion
+  try {
+    var kApertura = 'nbe_apertura_' + ref;
+    if (!sessionStorage.getItem(kApertura)) {
+      sessionStorage.setItem(kApertura, '1');
+      registrar('Abrió la página (sin elegir)');
+    }
+  } catch (e) { registrar('Abrió la página (sin elegir)'); }
+
   document.querySelectorAll('.opt').forEach(function (b) {
     b.addEventListener('click', function () {
       document.querySelectorAll('.opt').forEach(function (x) { x.disabled = true; });
