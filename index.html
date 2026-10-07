@@ -1,1 +1,91 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Prueba</title></head><body><h1>Prueba de pagina publica</h1></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Reunión con Mercado Libre Negocios</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Proxima Nova','Segoe UI',system-ui,Arial,sans-serif;background:#EDEDED;color:#333;line-height:1.5}
+  .header{background:#FFE600;padding:18px 24px;border-bottom:2px solid #e6c900}
+  .header img{height:44px;display:block}
+  .wrap{max-width:640px;margin:24px auto;padding:0 16px}
+  .card{background:#fff;border:1px solid #E0E0E0;border-radius:10px;padding:28px 26px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  h1{font-size:22px;margin-bottom:6px;color:#333}
+  .lead{font-size:15px;color:#555;margin:10px 0 22px}
+  .insight{background:#EBF3FF;border-left:4px solid #3483FA;border-radius:6px;padding:12px 14px;font-size:14px;margin-bottom:22px}
+  h2{font-size:16px;margin-bottom:12px}
+  .opt{display:block;width:100%;text-align:left;font:inherit;font-size:15px;padding:14px 16px;margin-bottom:10px;border-radius:8px;
+       border:1.5px solid #D0D0D0;background:#fff;color:#333;cursor:pointer}
+  .opt:hover{border-color:#3483FA;background:#F5F9FF}
+  .opt.primary{border-color:#3483FA;background:#3483FA;color:#fff;font-weight:600}
+  .opt.primary:hover{background:#2968c8;border-color:#2968c8}
+  .opt:disabled{opacity:.55;cursor:default}
+  .gracias{display:none;text-align:center;padding:10px 0}
+  .gracias h2{font-size:20px;margin-bottom:8px}
+  .gracias p{font-size:15px;color:#555}
+  footer{text-align:center;font-size:11px;color:#999;padding:18px}
+</style>
+</head>
+<body>
+<div class="header">
+  <img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/7.18.0/mercadolibre/logo__large_plus@2x.png" alt="Mercado Libre">
+</div>
+<div class="wrap">
+  <div class="card">
+    <div id="pregunta">
+      <h1>Reunión con Mercado Libre Negocios</h1>
+      <p class="lead">Mercado Libre Negocios es el área exclusiva para compradores corporativos y empresas con negocio propio interesadas en comprar. Las reuniones son solo para ese perfil.</p>
+      <h2>¿Cuál es tu interés?</h2>
+      <button class="opt primary" data-valor="Comprar con beneficios para mi empresa" data-comprar="1">Comprar con beneficios para mi empresa</button>
+      <button class="opt" data-valor="Vender en la plataforma" data-msg="Para vender en Mercado Libre puedes registrarte desde mercadolibre.com.mx.">Vender en la plataforma</button>
+      <button class="opt" data-valor="Operar o cobrar con Mercado Pago" data-msg="Para operar o cobrar con Mercado Pago puedes entrar a mercadopago.com.mx.">Operar o cobrar con Mercado Pago</button>
+      <button class="opt" data-valor="Otro" data-msg="">Otro</button>
+    </div>
+    <div id="gracias" class="gracias">
+      <h2 id="g-titulo">Gracias por tu interés</h2>
+      <p id="g-texto"></p>
+    </div>
+  </div>
+</div>
+<footer>Mercado Libre Negocios</footer>
+
+<script>
+  var ACCION = 'https://docs.google.com/forms/d/e/1FAIpQLSfikgVUXzjRbBd9d_dg6Wcy9Qg97kcjBBsGziloEvbgOq6uQg/formResponse';
+  var ENTRY_REF = 'entry.301989891';
+  var ENTRY_INTERES = 'entry.301989893';
+  var AGENDA = 'https://calendar.app.google/vqHCkgvEREZkXmh69';
+  var ref = (new URLSearchParams(location.search).get('c') || 'directo').replace(/[^A-Za-z0-9_\-]/g, '').slice(0, 40) || 'directo';
+
+  function registrar(valor) {
+    var datos = new URLSearchParams();
+    datos.set(ENTRY_REF, ref);
+    datos.set(ENTRY_INTERES, valor);
+    return fetch(ACCION, { method: 'POST', mode: 'no-cors', body: datos, keepalive: true }).catch(function () {});
+  }
+
+  document.querySelectorAll('.opt').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.opt').forEach(function (x) { x.disabled = true; });
+      var valor = b.getAttribute('data-valor');
+      var comprar = b.getAttribute('data-comprar') === '1';
+      registrar(valor).then(function () {
+        if (comprar) {
+          document.getElementById('pregunta').style.display = 'none';
+          document.getElementById('g-titulo').textContent = 'Te llevamos a la agenda';
+          document.getElementById('g-texto').textContent = 'Elige el horario que mejor te acomode.';
+          document.getElementById('gracias').style.display = 'block';
+          setTimeout(function () { location.href = AGENDA; }, 700);
+        } else {
+          document.getElementById('pregunta').style.display = 'none';
+          document.getElementById('g-texto').textContent =
+            'Estas reuniones son exclusivas para compradores corporativos. ' + (b.getAttribute('data-msg') || 'Recibimos tu respuesta.');
+          document.getElementById('gracias').style.display = 'block';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
